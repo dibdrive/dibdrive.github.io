@@ -1,54 +1,552 @@
 <!DOCTYPE html>
-<html lang="he">
+<html lang="he" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="google-site-verification" content="4Br3gqeSx4u294F" />
-  <title>DibDrive</title>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>DibDrive – אפליקציית לימוד תיאוריה | Israel Driving Theory</title>
+<meta name="description" content="אפליקציית DibDrive ללימוד תיאוריה — 1,802 שאלות רשמיות ממשרד התחבורה, מבחנים מלאים, תרגול לפי נושאים. בעברית ובערבית. זמין ל-iPhone ו-Android."/>
+<meta name="keywords" content="תיאוריה, לימוד נהיגה, מבחן תיאוריה, DibDrive, אפליקציית תיאוריה, ישראל"/>
+<meta name="author" content="דיב מנסור לימוד נהיגה"/>
+<!-- Open Graph / Facebook / WhatsApp -->
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://dibdrive.com/"/>
+<meta property="og:title" content="DibDrive – עוברים מבחן תיאוריה בפעם הראשונה"/>
+<meta property="og:description" content="1,802 שאלות רשמיות, מבחנים מלאים, תרגול לפי נושאים — בעברית ובערבית. הורד בחינם!"/>
+<meta property="og:image" content="https://dibdrive.github.io/dibdrive/og-image.jpg"/>
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="DibDrive – עוברים מבחן תיאוריה בפעם הראשונה"/>
+<meta name="twitter:description" content="1,802 שאלות רשמיות, מבחנים מלאים, תרגול לפי נושאים — בעברית ובערבית."/>
+<!-- Canonical -->
+<link rel="canonical" href="https://dibdrive.com/"/>
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-00RGFB77YC"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-00RGFB77YC');
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --night:#0B1D3A;
+  --road:#1A4B8C;
+  --headlight:#F5A623;
+  --white:#F8FAFF;
+  --muted:#8AA3C2;
+  --card:#122744;
+  --r:16px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Heebo',sans-serif;background:var(--night);color:var(--white);overflow-x:hidden;direction:rtl}
+
+.road-wrap{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.road-stripe{position:absolute;left:50%;transform:translateX(-50%);width:6px;
+  background:repeating-linear-gradient(to bottom,var(--headlight) 0,var(--headlight) 40px,transparent 40px,transparent 80px);
+  height:200%;top:-100%;animation:drive 2.5s linear infinite;opacity:.13}
+@keyframes drive{from{transform:translateX(-50%) translateY(0)}to{transform:translateX(-50%) translateY(80px)}}
+
+header{position:relative;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:18px 40px;border-bottom:1px solid rgba(255,255,255,.07)}
+.logo{display:flex;align-items:center;gap:10px;font-size:1.3rem;font-weight:900;letter-spacing:-.5px}
+.logo img{width:38px;height:38px;border-radius:10px;object-fit:cover}
+.logo span{color:var(--headlight)}
+.badge{font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--headlight);border:1px solid var(--headlight);border-radius:20px;padding:4px 14px}
+
+/* HERO */
+.hero{position:relative;z-index:5;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:48px;max-width:1100px;margin:0 auto;padding:80px 40px 60px}
+.hero-eyebrow{font-size:.75rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--headlight);margin-bottom:18px}
+.hero-title{font-size:clamp(2.2rem,5vw,4rem);font-weight:900;line-height:1.08;letter-spacing:-2px;margin-bottom:20px}
+.hero-title .accent{color:var(--headlight)}
+.hero-sub{font-size:1rem;color:var(--muted);line-height:1.7;margin-bottom:36px;max-width:420px}
+.cta-group{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:44px}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 24px;border-radius:14px;font-family:'Heebo',sans-serif;font-size:.95rem;font-weight:700;text-decoration:none;transition:transform .18s,box-shadow .18s}
+.btn:hover{transform:translateY(-3px)}
+.btn-apple{background:var(--white);color:var(--night);box-shadow:0 4px 20px rgba(245,166,35,.1)}
+.btn-apple:hover{box-shadow:0 8px 28px rgba(245,166,35,.25)}
+.btn-google{background:var(--headlight);color:var(--night);box-shadow:0 4px 20px rgba(245,166,35,.2)}
+.btn-google:hover{box-shadow:0 8px 32px rgba(245,166,35,.4)}
+.btn-icon{font-size:1.25rem}
+.btn-text-wrap{display:flex;flex-direction:column;align-items:flex-start}
+.btn-label{font-size:.65rem;font-weight:600;opacity:.65;letter-spacing:.5px}
+.btn-store{font-size:.95rem;font-weight:800}
+.stats-row{display:flex;gap:32px;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.08);padding-top:32px}
+.stat-num{font-size:1.8rem;font-weight:900;color:var(--headlight);letter-spacing:-1px;display:block}
+.stat-label{font-size:.75rem;color:var(--muted);font-weight:500;margin-top:2px}
+
+/* CAROUSEL */
+.carousel-outer{display:flex;flex-direction:column;align-items:center;gap:20px}
+.carousel-track{position:relative;width:240px;height:480px}
+.c-slide{position:absolute;inset:0;opacity:0;transition:opacity .7s ease;pointer-events:none}
+.c-slide.active{opacity:1;pointer-events:auto}
+.phone-shell{width:100%;background:#111827;border-radius:36px;padding:12px 10px;
+  box-shadow:0 30px 80px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.12)}
+.phone-notch{width:55px;height:9px;background:#000;border-radius:10px;margin:0 auto 8px}
+.phone-screen{border-radius:22px;overflow:hidden;width:100%}
+.phone-screen img{width:100%;display:block}
+.phone-home-btn{width:34px;height:5px;background:rgba(255,255,255,.18);border-radius:10px;margin:8px auto 0}
+.dots{display:flex;gap:8px;justify-content:center}
+.dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.2);cursor:pointer;transition:background .3s,transform .3s;border:none;padding:0}
+.dot.active{background:var(--headlight);transform:scale(1.3)}
+
+/* SECTIONS */
+.section{position:relative;z-index:5;padding:80px 40px;max-width:1100px;margin:0 auto}
+.section-label{font-size:.72rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--headlight);margin-bottom:12px}
+.section-title{font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:900;letter-spacing:-1px;margin-bottom:44px;line-height:1.15}
+
+/* SCREENSHOTS */
+.shots-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.shot-card{border-radius:18px;overflow:hidden;border:1px solid rgba(255,255,255,.08);transition:transform .2s,box-shadow .2s}
+.shot-card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(0,0,0,.4)}
+.shot-card img{width:100%;display:block}
+.shot-label{text-align:center;font-size:.78rem;font-weight:600;color:var(--muted);margin-top:10px}
+
+/* FEATURES */
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px}
+.feat-card{background:var(--card);border:1px solid rgba(255,255,255,.07);border-radius:var(--r);padding:26px;transition:transform .2s,border-color .2s}
+.feat-card:hover{transform:translateY(-4px);border-color:rgba(245,166,35,.3)}
+.feat-icon{font-size:1.8rem;margin-bottom:14px;display:block}
+.feat-title{font-size:1rem;font-weight:800;margin-bottom:7px}
+.feat-desc{font-size:.87rem;color:var(--muted);line-height:1.6}
+
+/* LICENSES */
+.lic-grid{display:flex;flex-wrap:wrap;gap:12px}
+.lic-badge{background:var(--card);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:10px 20px;font-size:.88rem;font-weight:700;display:flex;align-items:center;gap:8px;transition:background .2s}
+.lic-badge:hover{background:var(--road)}
+.lic-letter{display:inline-flex;width:28px;height:28px;background:var(--headlight);color:var(--night);border-radius:6px;align-items:center;justify-content:center;font-weight:900;font-size:.82rem}
+
+/* LANG */
+.lang-strip{position:relative;z-index:5;background:linear-gradient(135deg,var(--road),#0d2f5e);border-radius:20px;padding:44px 48px;max-width:1020px;margin:0 auto 80px;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;border:1px solid rgba(255,255,255,.1)}
+.lang-text h3{font-size:1.5rem;font-weight:900;margin-bottom:10px}
+.lang-text p{color:var(--muted);font-size:.92rem;line-height:1.6}
+.lang-flags{display:flex;gap:16px;align-items:center}
+.lang-flag{font-size:2rem;font-weight:900;color:var(--white);letter-spacing:1px}
+
+/* FINAL CTA */
+.final-cta{position:relative;z-index:5;text-align:center;padding:80px 40px 100px;border-top:1px solid rgba(255,255,255,.07)}
+.final-cta h2{font-size:clamp(1.8rem,4vw,3rem);font-weight:900;letter-spacing:-1.5px;margin-bottom:12px}
+.final-cta p{color:var(--muted);font-size:1rem;margin-bottom:36px}
+.cta-center{justify-content:center}
+
+footer{position:relative;z-index:5;text-align:center;padding:24px;border-top:1px solid rgba(255,255,255,.06);font-size:.78rem;color:var(--muted)}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:none}
+
+/* TESTIMONIALS */
+.testimonials-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px}
+.testi-card{background:var(--card);border:1px solid rgba(255,255,255,.07);border-radius:var(--r);padding:24px;display:flex;flex-direction:column;gap:10px;transition:transform .2s,border-color .2s}
+.testi-card:hover{transform:translateY(-4px);border-color:rgba(245,166,35,.25)}
+.testi-stars{color:var(--headlight);font-size:1rem;letter-spacing:1px}
+.testi-text{font-size:.92rem;color:var(--white);line-height:1.65;flex:1}
+.testi-author{font-size:.8rem;font-weight:700;color:var(--muted)}
+
+/* FAQ */
+.faq-list{display:flex;flex-direction:column;gap:12px;max-width:720px}
+.faq-item{background:var(--card);border:1px solid rgba(255,255,255,.07);border-radius:var(--r);overflow:hidden;transition:border-color .2s}
+.faq-item.open{border-color:rgba(245,166,35,.3)}
+.faq-q{width:100%;background:none;border:none;color:var(--white);font-family:'Heebo',sans-serif;font-size:1rem;font-weight:700;padding:20px 24px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;text-align:right}
+.faq-q:hover{background:rgba(255,255,255,.03)}
+.faq-arrow{color:var(--headlight);font-size:.75rem;transition:transform .3s;flex-shrink:0}
+.faq-item.open .faq-arrow{transform:rotate(180deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .35s ease;font-size:.92rem;color:var(--muted);line-height:1.7;padding:0 24px}
+.faq-item.open .faq-a{max-height:200px;padding:0 24px 20px}
+
+/* BACK TO TOP */
+.back-top{position:fixed;bottom:90px;right:24px;z-index:200;width:44px;height:44px;background:var(--road);border:1px solid rgba(255,255,255,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .3s,transform .2s;font-size:1.1rem;color:var(--white);text-decoration:none}
+.back-top.visible{opacity:1;pointer-events:auto}
+.back-top:hover{transform:translateY(-3px);background:var(--headlight);color:var(--night)}
+@media(max-width:768px){.back-top{bottom:78px;right:16px}}
+
+/* WHATSAPP FLOAT */
+.wa-btn{position:fixed;bottom:90px;left:24px;z-index:200;width:54px;height:54px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.45);text-decoration:none;transition:transform .2s,box-shadow .2s}
+.wa-btn:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(37,211,102,.65)}
+.wa-btn svg{width:28px;height:28px;fill:#fff}
+
+/* STICKY MOBILE CTA */
+.sticky-cta{display:none;position:fixed;bottom:0;left:0;right:0;z-index:150;background:rgba(11,29,58,.96);backdrop-filter:blur(12px);border-top:1px solid rgba(255,255,255,.1);padding:10px 16px;gap:10px}
+.sticky-cta .btn{flex:1;justify-content:center;padding:11px 12px;font-size:.82rem}
+
+@media(max-width:768px){
+  .hero{grid-template-columns:1fr;padding:48px 20px 40px;gap:32px}
+  .section{padding:60px 20px}
+  .shots-grid{grid-template-columns:repeat(2,1fr)}
+  .lang-strip{margin:0 20px 60px;padding:32px 24px}
+  header{padding:16px 20px}
+  .final-cta{padding:60px 20px 80px}
+  .carousel-track{width:200px;height:400px}
+  .sticky-cta{display:flex}
+  .wa-btn{bottom:78px}
+  body{padding-bottom:68px}
+}
+@media(prefers-reduced-motion:reduce){
+  .road-stripe{animation:none}
+  .reveal{opacity:1;transform:none}
+  .c-slide{transition:none}
+}
+</style>
 </head>
+<body>
 
-<body style="font-family:Arial;text-align:center;padding:40px;direction:rtl;">
+<div class="road-wrap" aria-hidden="true"><div class="road-stripe"></div></div>
 
-<h1>לימוד תיאוריה 2026 + יומן שיעורי נהיגה</h1>
+<header>
+  <div class="logo" dir="ltr">
+    <img src="https://dibdrive.github.io/img/adv7.png" alt="DibDrive"/>
+    Dib<span>Drive</span>
+  </div>
+  <span class="badge">חינם להורדה</span>
+</header>
 
-<h2>DibDrive</h2>
+<section class="hero">
+  <div class="hero-text">
+    <p class="hero-eyebrow">אפליקציית תיאוריה מספר 1</p>
+    <h1 class="hero-title">עוברים מבחן תיאוריה <span class="accent">בפעם הראשונה.</span></h1>
+    <p class="hero-sub">1,802 שאלות רשמיות ממשרד התחבורה, מבחנים מלאים, תרגול לפי נושאים — בעברית ובערבית.</p>
+    <div class="cta-group">
+      <a href="https://apps.apple.com/app/dibdrive/id6777384785" class="btn btn-apple" target="_blank" rel="noopener">
+        <span class="btn-icon">🍏</span>
+        <span class="btn-text-wrap"><span class="btn-label">הורד מה-</span><span class="btn-store">App Store</span></span>
+      </a>
+      <a href="https://play.google.com/store/apps/details?id=com.dibdrive.app" class="btn btn-google" target="_blank" rel="noopener">
+        <span class="btn-icon">🤖</span>
+        <span class="btn-text-wrap"><span class="btn-label">הורד מ-</span><span class="btn-store">Google Play</span></span>
+      </a>
+    </div>
+    <div class="stats-row">
+      <div class="stat"><span class="stat-num" data-target="1802">1,802</span><span class="stat-label">שאלות רשמיות</span></div>
+      <div class="stat"><span class="stat-num" data-target="642">642</span><span class="stat-label">שאלות נפוצות</span></div>
+      <div class="stat"><span class="stat-num" data-target="5">5</span><span class="stat-label">סוגי רישיון</span></div>
+    </div>
+  </div>
 
-<p>
-ברוכים הבאים ל־DibDrive – האפליקציה החכמה ללימוד תיאוריה נהיגה בישראל 🚗
-</p>
+  <div class="carousel-outer">
+    <div class="carousel-track" id="carousel">
+      <div class="c-slide active">
+        <div class="phone-shell">
+          <div class="phone-notch"></div>
+          <div class="phone-screen"><img src="https://dibdrive.github.io/img/adv1.jpg" alt="מסך ראשי"/></div>
+          <div class="phone-home-btn"></div>
+        </div>
+      </div>
+      <div class="c-slide">
+        <div class="phone-shell">
+          <div class="phone-notch"></div>
+          <div class="phone-screen"><img src="https://dibdrive.github.io/img/adv2.jpg" alt="שאלה"/></div>
+          <div class="phone-home-btn"></div>
+        </div>
+      </div>
+      <div class="c-slide">
+        <div class="phone-shell">
+          <div class="phone-notch"></div>
+          <div class="phone-screen"><img src="https://dibdrive.github.io/img/adv4.jpg" alt="תוצאות"/></div>
+          <div class="phone-home-btn"></div>
+        </div>
+      </div>
+    </div>
+    <div class="dots">
+      <button class="dot active" data-i="0"></button>
+      <button class="dot" data-i="1"></button>
+      <button class="dot" data-i="2"></button>
+    </div>
+  </div>
+</section>
 
-<p>
-לדרגות A, B, C1, C, D
-</p>
+<!-- VIDEO -->
+<div class="section reveal">
+  <p class="section-label">סרטון הדגמה</p>
+  <h2 class="section-title">ראה את האפליקציה בפעולה</h2>
+  <div style="border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,.08);max-width:780px">
+    <video controls playsinline preload="metadata"
+      style="width:100%;display:block;border-radius:20px"
+      poster="https://dibdrive.github.io/img/adv1.jpg">
+      <source src="https://raw.githubusercontent.com/dibdrive/dibdrive.github.io/main/img/dibdrivescreen.mp4" type="video/mp4"/>
+    </video>
+  </div>
+</div>
 
-<p>
-רוצים לעבור תיאוריה מהר ובקלות? הגעתם למקום הנכון.
-</p>
+<!-- SCREENSHOTS -->
+<div class="section reveal">
+  <p class="section-label">צילומי מסך</p>
+  <h2 class="section-title">תראה איך זה נראה</h2>
+  <div class="shots-grid" style="grid-template-columns:repeat(4,1fr)">
+    <div>
+      <div class="shot-card"><img src="https://dibdrive.github.io/img/adv1.jpg" alt="מסך ראשי עברית"/></div>
+      <p class="shot-label">מסך ראשי — עברית</p>
+    </div>
+    <div>
+      <div class="shot-card"><img src="https://dibdrive.github.io/img/adv4.jpg" alt="מסך ראשי ערבית"/></div>
+      <p class="shot-label">מסך ראשי — ערבית</p>
+    </div>
+    <div>
+      <div class="shot-card"><img src="https://dibdrive.github.io/img/adv2.jpg" alt="שאלת תיאוריה"/></div>
+      <p class="shot-label">שאלת תיאוריה</p>
+    </div>
+    <div>
+      <div class="shot-card"><img src="https://dibdrive.github.io/img/adv3.jpg" alt="הגדרות"/></div>
+      <p class="shot-label">הגדרות</p>
+    </div>
+  </div>
+</div>
 
-<p>
-האפליקציה משלבת לימוד תיאוריה מתקדם יחד עם מערכת לניהול ומעקב שיעורי נהיגה – הכל במקום אחד.
-</p>
+<!-- POSTERS -->
+<div class="section reveal" style="padding-top:0">
+  <p class="section-label">פרסומים</p>
+  <h2 class="section-title">האפליקציה בפעולה</h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:700px">
+    <div class="shot-card"><img src="https://dibdrive.github.io/img/adv5.png" alt="פוסטר DibDrive"/></div>
+    <div class="shot-card"><img src="https://dibdrive.github.io/img/adv6.png" alt="פוסטר DibDrive"/></div>
+  </div>
+</div>
 
-<h3>מה תקבלו באפליקציה?</h3>
+<!-- FEATURES -->
+<div class="section reveal">
+  <p class="section-label">מה תמצא באפליקציה</p>
+  <h2 class="section-title">הכלים שצריך כדי לעבור</h2>
+  <div class="features-grid">
+    <div class="feat-card">
+      <span class="feat-icon">📚</span>
+      <h3 class="feat-title">1,802 שאלות רשמיות</h3>
+      <p class="feat-desc">כל השאלות ממשרד התחבורה — מעודכן ומוכן למבחן האמיתי.</p>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">📝</span>
+      <h3 class="feat-title">מבחן אמיתי</h3>
+      <p class="feat-desc">30 שאלות עם טיימר, ניקוד, ותוצאות מיידיות — בדיוק כמו בתיאוריה.</p>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">🎯</span>
+      <h3 class="feat-title">תרגול לפי נושא</h3>
+      <p class="feat-desc">סימני דרך, עדיפות, מרחקים, בטיחות — מתמקדים בדיוק במה שצריך.</p>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">🔥</span>
+      <h3 class="feat-title">642 שאלות נפוצות</h3>
+      <p class="feat-desc">השאלות שחוזרות הכי הרבה במבחן — תדע אותן בעל פה.</p>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">🧠</span>
+      <h3 class="feat-title">מסלול חובה חכם</h3>
+      <p class="feat-desc">PRO: האפליקציה בונה לך מסלול לפי הטעויות האישיות שלך.</p>
+    </div>
+    <div class="feat-card">
+      <span class="feat-icon">🚀</span>
+      <h3 class="feat-title">שדרוג PRO</h3>
+      <p class="feat-desc">כל התכנים חינמיים — PRO מסיר את הפרסומות בלבד. ₪19.90 לחודש או ₪99 לשנה.</p>
+    </div>
+  </div>
+</div>
 
-<p>
-✔ מאגר שאלות תיאוריה עדכני<br>
-✔ מבחנים מלאים כמו במבחן האמיתי<br>
-✔ תרגול לפי נושאים<br>
-✔ זיהוי שאלות נפוצות שחוזרות<br>
-✔ יומן רישום שיעורי נהיגה<br>
-✔ מעקב התקדמות אישי<br>
-✔ חוויית שימוש פשוטה ונוחה
-</p>
+<!-- LICENSES -->
+<div class="section reveal" style="padding-top:0">
+  <p class="section-label">סוגי רישיון</p>
+  <h2 class="section-title">מתאים לכל סוג רישיון</h2>
+  <div class="lic-grid">
+    <div class="lic-badge"><span class="lic-letter">B</span> רישיון B – רכב פרטי</div>
+    <div class="lic-badge"><span class="lic-letter">A</span> רישיון A – אופנוע</div>
+    <div class="lic-badge"><span class="lic-letter">C</span> רישיון C – משאית</div>
+    <div class="lic-badge"><span class="lic-letter">C1</span> רישיון C1 – משאית קלה</div>
+    <div class="lic-badge"><span class="lic-letter">D</span> רישיון D – אוטובוס</div>
+  </div>
+</div>
 
-<h3>למה לבחור DibDrive?</h3>
+<!-- LANG -->
+<div class="lang-strip reveal">
+  <div class="lang-text">
+    <h3>עברית וערבית — מהיום הראשון</h3>
+    <p>ממשק, שאלות, והסברים — הכל בשפה שלך. בנוי לדוברי עברית וערבית כאחד.</p>
+  </div>
+  <div class="lang-flags">
+    <span class="lang-flag">עברית</span>
+    <span class="lang-flag">عربي</span>
+  </div>
+</div>
 
-<p>
-האפליקציה עוזרת לכם גם ללמוד וגם להתארגן – כך שתגיעו מוכנים גם לתיאוריה וגם לטסט.
-</p>
+<!-- TESTIMONIALS -->
+<div class="section reveal">
+  <p class="section-label">מה אומרים עלינו</p>
+  <h2 class="section-title">תלמידים שעברו את המבחן</h2>
+  <div class="testimonials-grid">
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">״עברתי את התיאוריה בפעם הראשונה אחרי שבוע של תרגול באפליקציה. השאלות היו בדיוק כמו במבחן האמיתי!״</p>
+      <span class="testi-author">— מוחמד, רישיון B</span>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">״האפליקציה בערבית — סוף סוף משהו שמדבר אלינו. תרגלתי כל יום 20 דקות ועברתי בקלות.״</p>
+      <span class="testi-author">— לין, רישיון B</span>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">״הייתי נכשל כבר פעמיים. עם DibDrive הבנתי בדיוק איפה אני טועה ועברתי בפעם השלישית.״</p>
+      <span class="testi-author">— יוסף, רישיון C</span>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">״ממשק נוח, שאלות מעודכנות, ומסלול חכם שחסך לי הרבה זמן. מומלץ בחום לכולם!״</p>
+      <span class="testi-author">— שירה, רישיון A</span>
+    </div>
+  </div>
+</div>
 
-<p>
-🚀 התחילו ללמוד ולעקוב אחרי ההתקדמות שלכם כבר היום
-</p>
+<!-- FAQ -->
+<div class="section reveal">
+  <p class="section-label">שאלות נפוצות</p>
+  <h2 class="section-title">יש לך שאלה?</h2>
+  <div class="faq-list">
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span>האפליקציה בחינם?</span>
+        <span class="faq-arrow">▼</span>
+      </button>
+      <div class="faq-a">כן! כל התכנים באפליקציה בחינם לחלוטין — מבחנים מלאים, תרגול לפי נושאים, שאלות נפוצות ועוד. מצב PRO מסיר את הפרסומות בלבד.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span>האפליקציה עובדת בלי אינטרנט?</span>
+        <span class="faq-arrow">▼</span>
+      </button>
+      <div class="faq-a">כן! לאחר הורדה ראשונה, כל השאלות זמינות גם ללא חיבור לאינטרנט. אפשר לתרגל בכל מקום ובכל זמן.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span>כמה שאלות יש באפליקציה?</span>
+        <span class="faq-arrow">▼</span>
+      </button>
+      <div class="faq-a">1,802 שאלות רשמיות ממשרד התחבורה, כולל 642 שאלות נפוצות שחוזרות הכי הרבה במבחן. מתאים לרישיונות B, A, C, C1 ו-D.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span>האפליקציה בעברית וגם בערבית?</span>
+        <span class="faq-arrow">▼</span>
+      </button>
+      <div class="faq-a">כן! ממשק, שאלות והסברים — הכל זמין בעברית ובערבית. אפשר להחליף שפה בכל רגע מההגדרות.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span>האפליקציה עובדת על iPhone וגם Android?</span>
+        <span class="faq-arrow">▼</span>
+      </button>
+      <div class="faq-a">כן! DibDrive זמינה הן ב-App Store לאייפון והן ב-Google Play לאנדרואיד — חוויה זהה בשתי הפלטפורמות.</div>
+    </div>
+  </div>
+</div>
 
+<!-- FINAL CTA -->
+<section class="final-cta reveal">
+  <h2>מוכן להתחיל לתרגל?</h2>
+  <p>הורד בחינם עכשיו ותתחיל להתכונן למבחן</p>
+  <div class="cta-group cta-center">
+    <a href="https://apps.apple.com/app/dibdrive/id6777384785" class="btn btn-apple" target="_blank" rel="noopener" onclick="trackDownload('AppStore','final_cta')">
+      <span class="btn-icon">🍏</span>
+      <span class="btn-text-wrap"><span class="btn-label">הורד מה-</span><span class="btn-store">App Store</span></span>
+    </a>
+    <a href="https://play.google.com/store/apps/details?id=com.dibdrive.app" class="btn btn-google" target="_blank" rel="noopener" onclick="trackDownload('GooglePlay','final_cta')">
+      <span class="btn-icon">🤖</span>
+      <span class="btn-text-wrap"><span class="btn-label">הורד מ-</span><span class="btn-store">Google Play</span></span>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 DibDrive · דיב מנסור לימוד נהיגה · 052-3132307 · כל הזכויות שמורות</p>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/9720523132307" class="wa-btn" target="_blank" rel="noopener" aria-label="שלח הודעה בוואטסאפ">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+  </svg>
+</a>
+
+<!-- STICKY MOBILE CTA -->
+<div class="sticky-cta">
+  <a href="https://apps.apple.com/app/dibdrive/id6777384785" class="btn btn-apple" target="_blank" rel="noopener" onclick="trackDownload('AppStore','sticky')">
+    <span class="btn-icon">🍏</span>
+    <span class="btn-text-wrap"><span class="btn-label">הורד מה-</span><span class="btn-store">App Store</span></span>
+  </a>
+  <a href="https://play.google.com/store/apps/details?id=com.dibdrive.app" class="btn btn-google" target="_blank" rel="noopener" onclick="trackDownload('GooglePlay','sticky')">
+    <span class="btn-icon">🤖</span>
+    <span class="btn-text-wrap"><span class="btn-label">הורד מ-</span><span class="btn-store">Google Play</span></span>
+  </a>
+</div>
+
+<!-- BACK TO TOP -->
+<a href="#" class="back-top" id="backTop" aria-label="חזור למעלה">↑</a>
+
+<script>
+// Track download clicks
+function trackDownload(store, location) {
+  if(typeof gtag !== 'undefined') {
+    gtag('event', 'download_click', {
+      'event_category': 'engagement',
+      'event_label': store,
+      'store': store,
+      'page_location': location
+    });
+  }
+}
+const slides = document.querySelectorAll('.c-slide');
+const dots   = document.querySelectorAll('.dot');
+let cur = 0;
+function goTo(n){
+  slides[cur].classList.remove('active');
+  dots[cur].classList.remove('active');
+  cur = (n + slides.length) % slides.length;
+  slides[cur].classList.add('active');
+  dots[cur].classList.add('active');
+}
+dots.forEach(d => d.addEventListener('click', () => goTo(parseInt(d.dataset.i))));
+setInterval(() => goTo(cur + 1), 3000);
+
+// Scroll reveal
+const obs = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), {threshold:.1});
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// Animated counters
+function animateCounter(el, target, duration=1800){
+  let start = null;
+  const step = ts => {
+    if(!start) start = ts;
+    const progress = Math.min((ts - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    const val = Math.floor(eased * target);
+    el.textContent = val.toLocaleString('he-IL');
+    if(progress < 1) requestAnimationFrame(step);
+    else el.textContent = target.toLocaleString('he-IL');
+  };
+  requestAnimationFrame(step);
+}
+const counterObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      animateCounter(e.target, parseInt(e.target.dataset.target));
+      counterObs.unobserve(e.target);
+    }
+  });
+}, {threshold:.5});
+document.querySelectorAll('.stat-num[data-target]').forEach(el => counterObs.observe(el));
+
+// FAQ
+function toggleFaq(btn){
+  const item = btn.closest('.faq-item');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  if(!isOpen) item.classList.add('open');
+}
+
+// Back to top
+const backTop = document.getElementById('backTop');
+window.addEventListener('scroll', () => {
+  backTop.classList.toggle('visible', window.scrollY > 400);
+});
+backTop.addEventListener('click', e => {
+  e.preventDefault();
+  window.scrollTo({top:0, behavior:'smooth'});
+});
+</script>
 </body>
 </html>
