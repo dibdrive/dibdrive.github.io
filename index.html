@@ -42,25 +42,44 @@
 }
 html{scroll-behavior:smooth}
 body{font-family:'Heebo',sans-serif;background:var(--night);color:var(--white);overflow-x:hidden;direction:rtl}
- 
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+}
+
+/* Visually-hidden utility for screen-reader-only text */
+.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* Skip link */
+.skip-link{position:absolute;top:-60px;right:16px;z-index:1000;background:var(--headlight);color:var(--night);font-weight:800;padding:12px 20px;border-radius:0 0 10px 10px;text-decoration:none;transition:top .2s}
+.skip-link:focus{top:0}
+
+/* Visible focus ring everywhere */
+a:focus-visible,button:focus-visible,[tabindex]:focus-visible{
+  outline:3px solid var(--headlight);
+  outline-offset:3px;
+  border-radius:4px;
+}
+
 .road-wrap{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
 .road-stripe{position:absolute;left:50%;transform:translateX(-50%);width:6px;
   background:repeating-linear-gradient(to bottom,var(--headlight) 0,var(--headlight) 40px,transparent 40px,transparent 80px);
   height:200%;top:-100%;animation:drive 2.5s linear infinite;opacity:.13}
 @keyframes drive{from{transform:translateX(-50%) translateY(0)}to{transform:translateX(-50%) translateY(80px)}}
- 
+
 header{position:relative;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:18px 40px;border-bottom:1px solid rgba(255,255,255,.07)}
 .logo{display:flex;align-items:center;gap:10px;font-size:1.3rem;font-weight:900;letter-spacing:-.5px}
 .logo img{width:38px;height:38px;border-radius:10px;object-fit:cover}
 .logo span{color:var(--headlight)}
 .badge{font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--headlight);border:1px solid var(--headlight);border-radius:20px;padding:4px 14px}
- 
+
 /* LANG SWITCHER */
 .header-left{display:flex;align-items:center;gap:12px}
 .lang-switch{display:flex;background:rgba(255,255,255,.08);border-radius:20px;padding:3px;gap:2px}
 .lang-btn{background:none;border:none;color:var(--muted);font-family:'Heebo',sans-serif;font-size:.8rem;font-weight:700;padding:5px 14px;border-radius:16px;cursor:pointer;transition:all .2s}
 .lang-btn.active{background:var(--headlight);color:var(--night)}
- 
+.lang-btn[aria-pressed="true"]{background:var(--headlight);color:var(--night)}
+
 /* HERO */
 .hero{position:relative;z-index:5;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:48px;max-width:1100px;margin:0 auto;padding:80px 40px 60px}
 .hero-eyebrow{font-size:.75rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--headlight);margin-bottom:18px}
@@ -76,12 +95,12 @@ header{position:relative;z-index:10;display:flex;align-items:center;justify-cont
 .btn-google:hover{box-shadow:0 8px 32px rgba(245,166,35,.4)}
 .btn-icon{font-size:1.25rem}
 .btn-text-wrap{display:flex;flex-direction:column;align-items:flex-start}
-.btn-label{font-size:.65rem;font-weight:600;opacity:.65;letter-spacing:.5px}
+.btn-label{font-size:.7rem;font-weight:600;letter-spacing:.5px}
 .btn-store{font-size:.95rem;font-weight:800}
-.stats-row{display:flex;gap:32px;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.08);padding-top:32px}
+.stats-row{display:flex;gap:32px;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.08);padding-top:32px;list-style:none}
 .stat-num{font-size:1.8rem;font-weight:900;color:var(--headlight);letter-spacing:-1px;display:block}
 .stat-label{font-size:.75rem;color:var(--muted);font-weight:500;margin-top:2px}
- 
+
 /* CAROUSEL */
 .carousel-outer{display:flex;flex-direction:column;align-items:center;gap:20px}
 .carousel-track{position:relative;width:240px;height:480px}
@@ -93,88 +112,97 @@ header{position:relative;z-index:10;display:flex;align-items:center;justify-cont
 .phone-screen{border-radius:22px;overflow:hidden;width:100%}
 .phone-screen img{width:100%;display:block}
 .phone-home-btn{width:34px;height:5px;background:rgba(255,255,255,.18);border-radius:10px;margin:8px auto 0}
+.carousel-controls{display:flex;align-items:center;gap:14px}
 .dots{display:flex;gap:8px;justify-content:center}
 .dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.2);cursor:pointer;transition:background .3s,transform .3s;border:none;padding:0}
-.dot.active{background:var(--headlight);transform:scale(1.3)}
- 
+.dot.active,.dot[aria-current="true"]{background:var(--headlight);transform:scale(1.3)}
+.carousel-toggle{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.08);border:none;color:var(--white);border-radius:14px;padding:6px 12px;font-size:.75rem;font-weight:700;cursor:pointer;font-family:'Heebo',sans-serif}
+.carousel-toggle:hover{background:rgba(255,255,255,.15)}
+
 /* SECTIONS */
 .section{position:relative;z-index:5;padding:80px 40px;max-width:1100px;margin:0 auto}
 .section-label{font-size:.72rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--headlight);margin-bottom:12px}
 .section-title{font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:900;letter-spacing:-1px;margin-bottom:44px;line-height:1.15}
- 
+
+/* VIDEO */
+.video-frame{border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,.08);max-width:780px}
+.video-frame video{width:100%;display:block;border-radius:20px}
+
 /* SCREENSHOTS */
-.shots-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.shots-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;list-style:none}
 .shot-card{border-radius:18px;overflow:hidden;border:1px solid rgba(255,255,255,.08);transition:transform .2s,box-shadow .2s}
 .shot-card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(0,0,0,.4)}
 .shot-card img{width:100%;display:block}
 .shot-label{text-align:center;font-size:.78rem;font-weight:600;color:var(--muted);margin-top:10px}
- 
+
+.posters-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:700px;list-style:none}
+
 /* FEATURES */
-.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px;list-style:none}
 .feat-card{background:var(--card);border:1px solid rgba(255,255,255,.07);border-radius:var(--r);padding:26px;transition:transform .2s,border-color .2s}
 .feat-card:hover{transform:translateY(-4px);border-color:rgba(245,166,35,.3)}
 .feat-icon{font-size:1.8rem;margin-bottom:14px;display:block}
 .feat-title{font-size:1rem;font-weight:800;margin-bottom:7px}
 .feat-desc{font-size:.87rem;color:var(--muted);line-height:1.6}
- 
+
 /* LICENSES */
-.lic-grid{display:flex;flex-wrap:wrap;gap:12px}
+.lic-grid{display:flex;flex-wrap:wrap;gap:12px;list-style:none}
 .lic-badge{background:var(--card);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:10px 20px;font-size:.88rem;font-weight:700;display:flex;align-items:center;gap:8px;transition:background .2s}
 .lic-badge:hover{background:var(--road)}
 .lic-letter{display:inline-flex;width:28px;height:28px;background:var(--headlight);color:var(--night);border-radius:6px;align-items:center;justify-content:center;font-weight:900;font-size:.82rem}
- 
+
 /* LANG */
 .lang-strip{position:relative;z-index:5;background:linear-gradient(135deg,var(--road),#0d2f5e);border-radius:20px;padding:44px 48px;max-width:1020px;margin:0 auto 80px;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;border:1px solid rgba(255,255,255,.1)}
 .lang-text h3{font-size:1.5rem;font-weight:900;margin-bottom:10px}
 .lang-text p{color:var(--muted);font-size:.92rem;line-height:1.6}
 .lang-flags{display:flex;gap:16px;align-items:center}
 .lang-flag{font-size:2rem;font-weight:900;color:var(--white);letter-spacing:1px}
- 
-/* FINAL CTA */
-.final-cta{position:relative;z-index:5;text-align:center;padding:80px 40px 100px;border-top:1px solid rgba(255,255,255,.07)}
-.final-cta h2{font-size:clamp(1.8rem,4vw,3rem);font-weight:900;letter-spacing:-1.5px;margin-bottom:12px}
-.final-cta p{color:var(--muted);font-size:1rem;margin-bottom:36px}
-.cta-center{justify-content:center}
- 
-footer{position:relative;z-index:5;text-align:center;padding:24px;border-top:1px solid rgba(255,255,255,.06);font-size:.78rem;color:var(--muted)}
- 
-.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
-.reveal.visible{opacity:1;transform:none}
- 
+
 /* TESTIMONIALS */
-.testimonials-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px}
-.testi-card{background:var(--card);border:1px solid rgba(255,255,255,.07);border-radius:var(--r);padding:24px;display:flex;flex-direction:column;gap:10px;transition:transform .2s,border-color .2s}
+.testimonials-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px;list-style:none}
+.testi-card{background:var(--card);border:1px solid rgba(255,255,255,.07);border-radius:var(--r);padding:24px;display:flex;flex-direction:column;gap:10px;transition:transform .2s,border-color .2s;margin:0}
 .testi-card:hover{transform:translateY(-4px);border-color:rgba(245,166,35,.25)}
 .testi-stars{color:var(--headlight);font-size:1rem;letter-spacing:1px}
-.testi-text{font-size:.92rem;color:var(--white);line-height:1.65;flex:1}
-.testi-author{font-size:.8rem;font-weight:700;color:var(--muted)}
- 
+.testi-text{font-size:.92rem;color:var(--white);line-height:1.65;flex:1;font-style:normal}
+.testi-author{font-size:.8rem;font-weight:700;color:var(--muted);font-style:normal}
+
 /* FAQ */
 .faq-list{display:flex;flex-direction:column;gap:12px;max-width:720px}
 .faq-item{background:var(--card);border:1px solid rgba(255,255,255,.07);border-radius:var(--r);overflow:hidden;transition:border-color .2s}
 .faq-item.open{border-color:rgba(245,166,35,.3)}
+.faq-q-heading{margin:0;font-size:1em;font-weight:400}
 .faq-q{width:100%;background:none;border:none;color:var(--white);font-family:'Heebo',sans-serif;font-size:1rem;font-weight:700;padding:20px 24px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;text-align:right}
 .faq-q:hover{background:rgba(255,255,255,.03)}
 .faq-arrow{color:var(--headlight);font-size:.75rem;transition:transform .3s;flex-shrink:0}
 .faq-item.open .faq-arrow{transform:rotate(180deg)}
 .faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .35s ease;font-size:.92rem;color:var(--muted);line-height:1.7;padding:0 24px}
-.faq-item.open .faq-a{max-height:200px;padding:0 24px 20px}
- 
+.faq-item.open .faq-a{max-height:240px;padding:0 24px 20px}
+@media (prefers-reduced-motion: reduce){
+  .faq-a{transition:none}
+}
+
 /* BACK TO TOP */
 .back-top{position:fixed;bottom:90px;right:24px;z-index:200;width:44px;height:44px;background:var(--road);border:1px solid rgba(255,255,255,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .3s,transform .2s;font-size:1.1rem;color:var(--white);text-decoration:none}
 .back-top.visible{opacity:1;pointer-events:auto}
 .back-top:hover{transform:translateY(-3px);background:var(--headlight);color:var(--night)}
 @media(max-width:768px){.back-top{bottom:78px;right:16px}}
- 
+
 /* WHATSAPP FLOAT */
 .wa-btn{position:fixed;bottom:90px;left:24px;z-index:200;width:54px;height:54px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.45);text-decoration:none;transition:transform .2s,box-shadow .2s}
 .wa-btn:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(37,211,102,.65)}
 .wa-btn svg{width:28px;height:28px;fill:#fff}
- 
+
 /* STICKY MOBILE CTA */
 .sticky-cta{display:none;position:fixed;bottom:0;left:0;right:0;z-index:150;background:rgba(11,29,58,.96);backdrop-filter:blur(12px);border-top:1px solid rgba(255,255,255,.1);padding:10px 16px;gap:10px}
 .sticky-cta .btn{flex:1;justify-content:center;padding:11px 12px;font-size:.82rem}
- 
+
+footer{position:relative;z-index:5;text-align:center;padding:24px;border-top:1px solid rgba(255,255,255,.06);font-size:.78rem;color:var(--muted)}
+footer .footer-links{margin-top:8px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+footer a{color:var(--headlight);text-decoration:underline}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:none}
+
 @media(max-width:768px){
   .hero{grid-template-columns:1fr;padding:48px 20px 40px;gap:32px}
   .section{padding:60px 20px}
@@ -187,6 +215,11 @@ footer{position:relative;z-index:5;text-align:center;padding:24px;border-top:1px
   .wa-btn{bottom:78px}
   body{padding-bottom:68px}
 }
+.final-cta{position:relative;z-index:5;text-align:center;padding:80px 40px 100px;border-top:1px solid rgba(255,255,255,.07)}
+.final-cta h2{font-size:clamp(1.8rem,4vw,3rem);font-weight:900;letter-spacing:-1.5px;margin-bottom:12px}
+.final-cta p{color:var(--muted);font-size:1rem;margin-bottom:36px}
+.cta-center{justify-content:center}
+
 @media(prefers-reduced-motion:reduce){
   .road-stripe{animation:none}
   .reveal{opacity:1;transform:none}
@@ -195,315 +228,365 @@ footer{position:relative;z-index:5;text-align:center;padding:24px;border-top:1px
 </style>
 </head>
 <body>
- 
+
+<a class="skip-link" href="#main">דלג לתוכן הראשי</a>
+
 <div class="road-wrap" aria-hidden="true"><div class="road-stripe"></div></div>
- 
+
 <header>
   <div class="logo" dir="ltr">
-    <img src="https://dibdrive.github.io/img/adv7.png" alt="DibDrive"/>
-    Dib<span>Drive</span>
+    <img src="https://dibdrive.github.io/img/adv7.png" alt=""/>
+    <span class="visually-hidden">DibDrive – </span>Dib<span>Drive</span>
   </div>
   <span class="badge" data-he="חינם להורדה" data-ar="تحميل مجاني">חינם להורדה</span>
-  <div class="lang-switch">
-    <button class="lang-btn active" onclick="setLang('he')">עברית</button>
-    <button class="lang-btn" onclick="setLang('ar')">عربي</button>
-  </div>
+  <nav class="lang-switch" aria-label="בחירת שפת האתר">
+    <button type="button" class="lang-btn" data-lang="he" aria-pressed="true">עברית</button>
+    <button type="button" class="lang-btn" data-lang="ar" aria-pressed="false">عربي</button>
+  </nav>
 </header>
- 
-<section class="hero">
+
+<main id="main">
+
+<section class="hero" aria-label="פתיח">
   <div class="hero-text">
     <p class="hero-eyebrow" data-he="אפליקציית תיאוריה מספר 1" data-ar="تطبيق النظري رقم 1">אפליקציית תיאוריה מספר 1</p>
     <h1 class="hero-title"><span data-he="עוברים מבחן תיאוריה" data-ar="اجتاز امتحان النظري">עוברים מבחן תיאוריה</span> <span class="accent" data-he="בפעם הראשונה." data-ar="من المرة الأولى.">בפעם הראשונה.</span></h1>
     <p class="hero-sub" data-he="1,802 שאלות רשמיות ממשרד התחבורה, מבחנים מלאים, תרגול לפי נושאים — בעברית ובערבית." data-ar="1,802 سؤالاً رسمياً من وزارة المواصلات، اختبارات كاملة، تدريب حسب الموضوع — بالعربية والعبرية.">1,802 שאלות רשמיות ממשרד התחבורה, מבחנים מלאים, תרגול לפי נושאים — בעברית ובערבית.</p>
     <div class="cta-group">
       <a href="https://apps.apple.com/app/dibdrive/id6777384785" class="btn btn-apple" target="_blank" rel="noopener" onclick="trackDownload('AppStore','hero')">
-        <span class="btn-icon">🍏</span>
+        <span class="btn-icon" aria-hidden="true">🍏</span>
         <span class="btn-text-wrap"><span class="btn-label" data-he="הורד מה-" data-ar="حمّل من">הורד מה-</span><span class="btn-store">App Store</span></span>
+        <span class="visually-hidden">(נפתח בכרטיסייה חדשה)</span>
       </a>
       <a href="https://play.google.com/store/apps/details?id=com.dibdrive.app" class="btn btn-google" target="_blank" rel="noopener" onclick="trackDownload('GooglePlay','hero')">
-        <span class="btn-icon">🤖</span>
+        <span class="btn-icon" aria-hidden="true">🤖</span>
         <span class="btn-text-wrap"><span class="btn-label" data-he="הורד מ-" data-ar="حمّل من">הורד מ-</span><span class="btn-store">Google Play</span></span>
+        <span class="visually-hidden">(נפתח בכרטיסייה חדשה)</span>
       </a>
     </div>
-    <div class="stats-row">
-      <div class="stat"><span class="stat-num" data-target="1802">1,802</span><span class="stat-label" data-he="שאלות רשמיות" data-ar="سؤال رسمي">שאלות רשמיות</span></div>
-      <div class="stat"><span class="stat-num" data-target="642">642</span><span class="stat-label" data-he="שאלות נפוצות" data-ar="سؤال شائع">שאלות נפוצות</span></div>
-      <div class="stat"><span class="stat-num" data-target="5">5</span><span class="stat-label" data-he="סוגי רישיון" data-ar="أنواع رخصة">סוגי רישיון</span></div>
-    </div>
+    <ul class="stats-row">
+      <li class="stat"><span class="stat-num" data-target="1802">1,802</span><span class="stat-label" data-he="שאלות רשמיות" data-ar="سؤال رسمي">שאלות רשמיות</span></li>
+      <li class="stat"><span class="stat-num" data-target="642">642</span><span class="stat-label" data-he="שאלות נפוצות" data-ar="سؤال شائع">שאלות נפוצות</span></li>
+      <li class="stat"><span class="stat-num" data-target="5">5</span><span class="stat-label" data-he="סוגי רישיון" data-ar="أنواع رخصة">סוגי רישיון</span></li>
+    </ul>
   </div>
- 
-  <div class="carousel-outer">
+
+  <div class="carousel-outer" role="group" aria-label="תצוגה מתחלפת של מסכי האפליקציה">
     <div class="carousel-track" id="carousel">
       <div class="c-slide active">
         <div class="phone-shell">
           <div class="phone-notch"></div>
-          <div class="phone-screen"><img src="https://dibdrive.github.io/img/adv1.jpg" alt="מסך ראשי"/></div>
+          <div class="phone-screen"><img src="https://dibdrive.github.io/img/adv1.jpg" alt="תצוגת המסך הראשי של אפליקציית DibDrive"/></div>
           <div class="phone-home-btn"></div>
         </div>
       </div>
       <div class="c-slide">
         <div class="phone-shell">
           <div class="phone-notch"></div>
-          <div class="phone-screen"><img src="https://dibdrive.github.io/img/adv2.jpg" alt="שאלה"/></div>
+          <div class="phone-screen"><img src="https://dibdrive.github.io/img/adv2.jpg" alt="תצוגת שאלת תיאוריה באפליקציה"/></div>
           <div class="phone-home-btn"></div>
         </div>
       </div>
       <div class="c-slide">
         <div class="phone-shell">
           <div class="phone-notch"></div>
-          <div class="phone-screen"><img src="https://dibdrive.github.io/img/adv4.jpg" alt="תוצאות"/></div>
+          <div class="phone-screen"><img src="https://dibdrive.github.io/img/adv4.jpg" alt="תצוגת מסך תוצאות המבחן באפליקציה"/></div>
           <div class="phone-home-btn"></div>
         </div>
       </div>
     </div>
-    <div class="dots">
-      <button class="dot active" data-i="0"></button>
-      <button class="dot" data-i="1"></button>
-      <button class="dot" data-i="2"></button>
+    <div class="carousel-controls">
+      <div class="dots" role="tablist" aria-label="בחירת תמונה">
+        <button type="button" class="dot active" data-i="0" role="tab" aria-selected="true" aria-current="true" aria-label="תמונה 1 מתוך 3"></button>
+        <button type="button" class="dot" data-i="1" role="tab" aria-selected="false" aria-label="תמונה 2 מתוך 3"></button>
+        <button type="button" class="dot" data-i="2" role="tab" aria-selected="false" aria-label="תמונה 3 מתוך 3"></button>
+      </div>
+      <button type="button" class="carousel-toggle" id="carouselToggle" aria-pressed="false">
+        <span id="carouselToggleIcon" aria-hidden="true">⏸</span>
+        <span id="carouselToggleLabel">עצור החלפה אוטומטית</span>
+      </button>
     </div>
   </div>
 </section>
- 
+
 <!-- VIDEO -->
 <div class="section reveal">
   <p class="section-label" data-he="סרטון הדגמה" data-ar="فيديو تعريفي">סרטון הדגמה</p>
   <h2 class="section-title" data-he="ראה את האפליקציה בפעולה" data-ar="شاهد التطبيق أثناء العمل">ראה את האפליקציה בפעולה</h2>
-  <div style="border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,.08);max-width:780px">
+  <p class="visually-hidden" id="video-desc">סרטון הדגמה קצר וללא דיבור, המציג ניווט במסכי האפליקציה, מענה על שאלת תיאוריה וצפייה בתוצאות.</p>
+  <div class="video-frame">
     <video controls playsinline preload="metadata"
-      style="width:100%;display:block;border-radius:20px"
+      aria-describedby="video-desc"
       poster="https://dibdrive.github.io/img/adv1.jpg">
       <source src="https://raw.githubusercontent.com/dibdrive/dibdrive.github.io/main/img/advscreen1.mp4" type="video/mp4"/>
+      הדפדפן שלך אינו תומך בהצגת וידאו. ניתן לצפות בסרטון ההדגמה בקישור: <a href="https://raw.githubusercontent.com/dibdrive/dibdrive.github.io/main/img/advscreen1.mp4">advscreen1.mp4</a>
     </video>
   </div>
 </div>
- 
+
 <!-- SCREENSHOTS -->
 <div class="section reveal">
   <p class="section-label" data-he="צילומי מסך" data-ar="لقطات الشاشة">צילומי מסך</p>
   <h2 class="section-title" data-he="תראה איך זה נראה" data-ar="شاهد كيف يبدو التطبيق">תראה איך זה נראה</h2>
-  <div class="shots-grid" style="grid-template-columns:repeat(4,1fr)">
-    <div>
-      <div class="shot-card"><img src="https://dibdrive.github.io/img/adv1.jpg" alt="מסך ראשי עברית"/></div>
+  <ul class="shots-grid">
+    <li>
+      <div class="shot-card"><img src="https://dibdrive.github.io/img/adv1.jpg" alt="מסך ראשי של האפליקציה בעברית"/></div>
       <p class="shot-label" data-he="מסך ראשי — עברית" data-ar="الشاشة الرئيسية — عبري">מסך ראשי — עברית</p>
-    </div>
-    <div>
-      <div class="shot-card"><img src="https://dibdrive.github.io/img/adv4.jpg" alt="מסך ראשי ערבית"/></div>
+    </li>
+    <li>
+      <div class="shot-card"><img src="https://dibdrive.github.io/img/adv4.jpg" alt="מסך ראשי של האפליקציה בערבית"/></div>
       <p class="shot-label" data-he="מסך ראשי — ערבית" data-ar="الشاشة الرئيسية — عربي">מסך ראשי — ערבית</p>
-    </div>
-    <div>
-      <div class="shot-card"><img src="https://dibdrive.github.io/img/adv2.jpg" alt="שאלת תיאוריה"/></div>
+    </li>
+    <li>
+      <div class="shot-card"><img src="https://dibdrive.github.io/img/adv2.jpg" alt="דוגמה לשאלת תיאוריה עם תשובות לבחירה"/></div>
       <p class="shot-label" data-he="שאלת תיאוריה" data-ar="سؤال نظري">שאלת תיאוריה</p>
-    </div>
-    <div>
-      <div class="shot-card"><img src="https://dibdrive.github.io/img/adv3.jpg" alt="הגדרות"/></div>
+    </li>
+    <li>
+      <div class="shot-card"><img src="https://dibdrive.github.io/img/adv3.jpg" alt="מסך ההגדרות של האפליקציה"/></div>
       <p class="shot-label" data-he="הגדרות" data-ar="الإعدادات">הגדרות</p>
-    </div>
-  </div>
+    </li>
+  </ul>
 </div>
- 
+
 <!-- POSTERS -->
 <div class="section reveal" style="padding-top:0">
   <p class="section-label" data-he="פרסומים" data-ar="إعلانات">פרסומים</p>
   <h2 class="section-title" data-he="האפליקציה בפעולה" data-ar="التطبيق في العمل">האפליקציה בפעולה</h2>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:700px">
-    <div class="shot-card"><img src="https://dibdrive.github.io/img/adv5.png" alt="פוסטר DibDrive"/></div>
-    <div class="shot-card"><img src="https://dibdrive.github.io/img/adv6.png" alt="פוסטר DibDrive"/></div>
-  </div>
+  <ul class="posters-grid">
+    <li class="shot-card"><img src="https://dibdrive.github.io/img/adv5.png" alt="באנר פרסומי של DibDrive מספר 1"/></li>
+    <li class="shot-card"><img src="https://dibdrive.github.io/img/adv6.png" alt="באנר פרסומי של DibDrive מספר 2"/></li>
+  </ul>
 </div>
- 
+
 <!-- FEATURES -->
 <div class="section reveal">
   <p class="section-label" data-he="מה תמצא באפליקציה" data-ar="ما ستجد في التطبيق">מה תמצא באפליקציה</p>
   <h2 class="section-title" data-he="הכלים שצריך כדי לעבור" data-ar="الأدوات التي تحتاجها للنجاح">הכלים שצריך כדי לעבור</h2>
-  <div class="features-grid">
-    <div class="feat-card">
-      <span class="feat-icon">📚</span>
+  <ul class="features-grid">
+    <li class="feat-card">
+      <span class="feat-icon" aria-hidden="true">📚</span>
       <h3 class="feat-title" data-he="1,802 שאלות רשמיות" data-ar="1,802 سؤال رسمي">1,802 שאלות רשמיות</h3>
       <p class="feat-desc" data-he="כל השאלות ממשרד התחבורה — מעודכן ומוכן למבחן האמיתי." data-ar="جميع الأسئلة من وزارة المواصلات — محدّثة وجاهزة للامتحان الحقيقي.">כל השאלות ממשרד התחבורה — מעודכן ומוכן למבחן האמיתי.</p>
-    </div>
-    <div class="feat-card">
-      <span class="feat-icon">📝</span>
+    </li>
+    <li class="feat-card">
+      <span class="feat-icon" aria-hidden="true">📝</span>
       <h3 class="feat-title" data-he="מבחן אמיתי" data-ar="امتحان حقيقي">מבחן אמיתי</h3>
       <p class="feat-desc" data-he="30 שאלות עם טיימר, ניקוד, ותוצאות מיידיות — בדיוק כמו בתיאוריה." data-ar="30 سؤالاً مع مؤقت ونتائج فورية — تماماً كالامتحان الحقيقي.">30 שאלות עם טיימר, ניקוד, ותוצאות מיידיות — בדיוק כמו בתיאוריה.</p>
-    </div>
-    <div class="feat-card">
-      <span class="feat-icon">🎯</span>
+    </li>
+    <li class="feat-card">
+      <span class="feat-icon" aria-hidden="true">🎯</span>
       <h3 class="feat-title" data-he="תרגול לפי נושא" data-ar="تدريب حسب الموضوع">תרגול לפי נושא</h3>
       <p class="feat-desc" data-he="סימני דרך, עדיפות, מרחקים, בטיחות — מתמקדים בדיוק במה שצריך." data-ar="إشارات المرور، الأولوية، المسافات، السلامة — التركيز على ما تحتاجه.">סימני דרך, עדיפות, מרחקים, בטיחות — מתמקדים בדיוק במה שצריך.</p>
-    </div>
-    <div class="feat-card">
-      <span class="feat-icon">🔥</span>
+    </li>
+    <li class="feat-card">
+      <span class="feat-icon" aria-hidden="true">🔥</span>
       <h3 class="feat-title" data-he="642 שאלות נפוצות" data-ar="642 سؤالاً شائعاً">642 שאלות נפוצות</h3>
       <p class="feat-desc" data-he="השאלות שחוזרות הכי הרבה במבחן — תדע אותן בעל פה." data-ar="الأسئلة الأكثر تكراراً في الامتحان — ستعرفها عن ظهر قلب.">השאלות שחוזרות הכי הרבה במבחן — תדע אותן בעל פה.</p>
-    </div>
-    <div class="feat-card">
-      <span class="feat-icon">🧠</span>
+    </li>
+    <li class="feat-card">
+      <span class="feat-icon" aria-hidden="true">🧠</span>
       <h3 class="feat-title" data-he="מסלול חובה חכם" data-ar="مسار إلزامي ذكي">מסלול חובה חכם</h3>
       <p class="feat-desc" data-he="PRO: האפליקציה בונה לך מסלול לפי הטעויות האישיות שלך." data-ar="PRO: يبني التطبيق مساراً بناءً على أخطائك الشخصية.">PRO: האפליקציה בונה לך מסלול לפי הטעויות האישיות שלך.</p>
-    </div>
-    <div class="feat-card">
-      <span class="feat-icon">🚀</span>
+    </li>
+    <li class="feat-card">
+      <span class="feat-icon" aria-hidden="true">🚀</span>
       <h3 class="feat-title" data-he="שדרוג PRO" data-ar="ترقية PRO">שדרוג PRO</h3>
       <p class="feat-desc" data-he="כל התכנים חינמיים — PRO מסיר את הפרסומות בלבד. ₪9.90 לחודש או ₪49.90 לשנה." data-ar="جميع المحتويات مجانية — PRO يزيل الإعلانات فقط. ₪9.90 شهرياً أو ₪49.90 سنوياً.">כל התכנים חינמיים — PRO מסיר את הפרסומות בלבד. ₪9.90 לחודש או ₪49.90 לשנה.</p>
-    </div>
-  </div>
+    </li>
+  </ul>
 </div>
- 
+
 <!-- LICENSES -->
 <div class="section reveal" style="padding-top:0">
   <p class="section-label" data-he="סוגי רישיון" data-ar="أنواع الرخصة">סוגי רישיון</p>
   <h2 class="section-title" data-he="מתאים לכל סוג רישיון" data-ar="مناسب لجميع أنواع الرخص">מתאים לכל סוג רישיון</h2>
-  <div class="lic-grid">
-    <div class="lic-badge"><span class="lic-letter">B</span> <span data-he="רישיון B – רכב פרטי" data-ar="رخصة B – سيارة خاصة">רישיון B – רכב פרטי</span></div>
-    <div class="lic-badge"><span class="lic-letter">A</span> <span data-he="רישיון A – אופנוע" data-ar="رخصة A – دراجة نارية">רישיון A – אופנוע</span></div>
-    <div class="lic-badge"><span class="lic-letter">C</span> <span data-he="רישיון C – משאית" data-ar="رخصة C – شاحنة">רישיון C – משאית</span></div>
-    <div class="lic-badge"><span class="lic-letter">C1</span> <span data-he="רישיון C1 – משאית קלה" data-ar="رخصة C1 – شاحنة خفيفة">רישיון C1 – משאית קלה</span></div>
-    <div class="lic-badge"><span class="lic-letter">D</span> <span data-he="רישיון D – אוטובוס" data-ar="رخصة D – حافلة">רישיון D – אוטובוס</span></div>
-  </div>
+  <ul class="lic-grid">
+    <li class="lic-badge"><span class="lic-letter" aria-hidden="true">B</span> <span data-he="רישיון B – רכב פרטי" data-ar="رخصة B – سيارة خاصة">רישיון B – רכב פרטי</span></li>
+    <li class="lic-badge"><span class="lic-letter" aria-hidden="true">A</span> <span data-he="רישיון A – אופנוע" data-ar="رخصة A – دراجة نارية">רישיון A – אופנוע</span></li>
+    <li class="lic-badge"><span class="lic-letter" aria-hidden="true">C</span> <span data-he="רישיון C – משאית" data-ar="رخصة C – شاحنة">רישיון C – משאית</span></li>
+    <li class="lic-badge"><span class="lic-letter" aria-hidden="true">C1</span> <span data-he="רישיון C1 – משאית קלה" data-ar="رخصة C1 – شاحنة خفيفة">רישיון C1 – משאית קלה</span></li>
+    <li class="lic-badge"><span class="lic-letter" aria-hidden="true">D</span> <span data-he="רישיון D – אוטובוס" data-ar="رخصة D – حافلة">רישיון D – אוטובוס</span></li>
+  </ul>
 </div>
- 
+
 <!-- LANG -->
 <div class="lang-strip reveal">
   <div class="lang-text">
-    <h3 data-he="עברית וערבית — מהיום הראשון" data-ar="عربي ועברית — من اليوم الأول">עברית וערבית — מהיום הראשון</h3>
+    <h2 data-he="עברית וערבית — מהיום הראשון" data-ar="العربية والعبرية — منذ اليوم الأول">עברית וערבית — מהיום הראשון</h2>
     <p data-he="ממשק, שאלות, והסברים — הכל בשפה שלך. בנוי לדוברי עברית וערבית כאחד." data-ar="الواجهة والأسئلة والشروح — كل شيء بلغتك. مبني لمتحدثي العربية والعبرية.">ממשק, שאלות, והסברים — הכל בשפה שלך. בנוי לדוברי עברית וערבית כאחד.</p>
   </div>
-  <div class="lang-flags">
+  <div class="lang-flags" aria-hidden="true">
     <span class="lang-flag">עברית</span>
     <span class="lang-flag">عربي</span>
   </div>
 </div>
- 
+
 <!-- TESTIMONIALS -->
 <div class="section reveal">
   <p class="section-label" data-he="מה אומרים עלינו" data-ar="ماذا يقولون عنا">מה אומרים עלינו</p>
   <h2 class="section-title" data-he="תלמידים שעברו את המבחן" data-ar="طلاب اجتازوا الامتحان">תלמידים שעברו את המבחן</h2>
-  <div class="testimonials-grid">
-    <div class="testi-card">
-      <div class="testi-stars">★★★★★</div>
-      <p class="testi-text" data-he="״עברתי את התיאוריה בפעם הראשונה אחרי שבוע של תרגול באפליקציה. השאלות היו בדיוק כמו במבחן האמיתי!״" data-ar="«اجتزت النظري من المرة الأولى بعد أسبوع تدريب على التطبيق. الأسئلة كانت مطابقة للامتحان الحقيقي!»">״עברתי את התיאוריה בפעם הראשונה אחרי שבוע של תרגול באפליקציה. השאלות היו בדיוק כמו במבחן האמיתי!״</p>
-      <span class="testi-author" data-he="— מוחמד, רישיון B" data-ar="— محمد، رخصة B">— מוחמד, רישיון B</span>
-    </div>
-    <div class="testi-card">
-      <div class="testi-stars">★★★★★</div>
-      <p class="testi-text" data-he="״האפליקציה בערבית — סוף סוף משהו שמדבר אלינו. תרגלתי כל יום 20 דקות ועברתי בקלות.״" data-ar="«التطبيق بالعربية — أخيراً شيء يتحدث إلينا. تدربت 20 دقيقة يومياً ونجحت بسهولة.»">״האפליקציה בערבית — סוף סוף משהו שמדבר אלינו. תרגלתי כל יום 20 דקות ועברתי בקלות.״</p>
-      <span class="testi-author" data-he="— לין, רישיון B" data-ar="— لين، رخصة B">— לין, רישיון B</span>
-    </div>
-    <div class="testi-card">
-      <div class="testi-stars">★★★★★</div>
-      <p class="testi-text" data-he="״הייתי נכשל כבר פעמיים. עם DibDrive הבנתי בדיוק איפה אני טועה ועברתי בפעם השלישית.״" data-ar="«رسبت مرتين من قبل. مع DibDrive فهمت أين أخطأت ونجحت في المرة الثالثة.»">״הייתי נכשל כבר פעמיים. עם DibDrive הבנתי בדיוק איפה אני טועה ועברתי בפעם השלישית.״</p>
-      <span class="testi-author" data-he="— יוסף, רישיון C" data-ar="— يوسف، رخصة C">— יוסף, רישיון C</span>
-    </div>
-    <div class="testi-card">
-      <div class="testi-stars">★★★★★</div>
-      <p class="testi-text" data-he="״ממשק נוח, שאלות מעודכנות, ומסלול חכם שחסך לי הרבה זמן. מומלץ בחום לכולם!״" data-ar="«واجهة سهلة، أسئلة محدّثة، ومسار ذكي وفّر لي وقتاً كثيراً. أنصح به بشدة!»">״ממשק נוח, שאלות מעודכנות, ומסלול חכם שחסך לי הרבה זמן. מומלץ בחום לכולם!״</p>
-      <span class="testi-author" data-he="— שירה, רישיון A" data-ar="— شيرا، رخصة A">— שירה, רישיון A</span>
-    </div>
-  </div>
+  <ul class="testimonials-grid">
+    <li class="testi-card">
+      <blockquote style="margin:0">
+        <div class="testi-stars" aria-hidden="true">★★★★★</div>
+        <span class="visually-hidden">דירוג: 5 מתוך 5 כוכבים.</span>
+        <p class="testi-text" data-he="״עברתי את התיאוריה בפעם הראשונה אחרי שבוע של תרגול באפליקציה. השאלות היו בדיוק כמו במבחן האמיתי!״" data-ar="«اجتزت النظري من المرة الأولى بعد أسبوع تدريب على التطبيق. الأسئلة كانت مطابقة للامتحان الحقيقي!»">״עברתי את התיאוריה בפעם הראשונה אחרי שבוע של תרגול באפליקציה. השאלות היו בדיוק כמו במבחן האמיתי!״</p>
+        <cite class="testi-author" data-he="— מוחמד, רישיון B" data-ar="— محمد، رخصة B">— מוחמד, רישיון B</cite>
+      </blockquote>
+    </li>
+    <li class="testi-card">
+      <blockquote style="margin:0">
+        <div class="testi-stars" aria-hidden="true">★★★★★</div>
+        <span class="visually-hidden">דירוג: 5 מתוך 5 כוכבים.</span>
+        <p class="testi-text" data-he="״האפליקציה בערבית — סוף סוף משהו שמדבר אלינו. תרגלתי כל יום 20 דקות ועברתי בקלות.״" data-ar="«التطبيق بالعربية — أخيراً شيء يتحدث إلينا. تدربت 20 دقيقة يومياً ونجحت بسهولة.»">״האפליקציה בערבית — סוף סוף משהו שמדבר אלינו. תרגלתי כל יום 20 דקות ועברתי בקלות.״</p>
+        <cite class="testi-author" data-he="— לין, רישיון B" data-ar="— لين، رخصة B">— לין, רישיון B</cite>
+      </blockquote>
+    </li>
+    <li class="testi-card">
+      <blockquote style="margin:0">
+        <div class="testi-stars" aria-hidden="true">★★★★★</div>
+        <span class="visually-hidden">דירוג: 5 מתוך 5 כוכבים.</span>
+        <p class="testi-text" data-he="״הייתי נכשל כבר פעמיים. עם DibDrive הבנתי בדיוק איפה אני טועה ועברתי בפעם השלישית.״" data-ar="«رسبت مرتين من قبل. مع DibDrive فهمت أين أخطأت ونجحت في المرة الثالثة.»">״הייתי נכשל כבר פעמיים. עם DibDrive הבנתי בדיוק איפה אני טועה ועברתי בפעם השלישית.״</p>
+        <cite class="testi-author" data-he="— יוסף, רישיון C" data-ar="— يوسف، رخصة C">— יוסף, רישיון C</cite>
+      </blockquote>
+    </li>
+    <li class="testi-card">
+      <blockquote style="margin:0">
+        <div class="testi-stars" aria-hidden="true">★★★★★</div>
+        <span class="visually-hidden">דירוג: 5 מתוך 5 כוכבים.</span>
+        <p class="testi-text" data-he="״ממשק נוח, שאלות מעודכנות, ומסלול חכם שחסך לי הרבה זמן. מומלץ בחום לכולם!״" data-ar="«واجهة سهلة، أسئلة محدّثة، ومسار ذكي وفّر لي وقتاً كثيراً. أنصح به بشدة!»">״ממשק נוח, שאלות מעודכנות, ומסלול חכם שחסך לי הרבה זמן. מומלץ בחום לכולם!״</p>
+        <cite class="testi-author" data-he="— שירה, רישיון A" data-ar="— شيرا، رخصة A">— שירה, רישיון A</cite>
+      </blockquote>
+    </li>
+  </ul>
 </div>
- 
+
 <!-- FAQ -->
 <div class="section reveal">
   <p class="section-label" data-he="שאלות נפוצות" data-ar="أسئلة شائعة">שאלות נפוצות</p>
   <h2 class="section-title" data-he="יש לך שאלה?" data-ar="هل لديك سؤال؟">יש לך שאלה?</h2>
   <div class="faq-list">
     <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        <span data-he="האפליקציה בחינם?" data-ar="هل التطبيق مجاني؟">האפליקציה בחינם?</span>
-        <span class="faq-arrow">▼</span>
-      </button>
-      <div class="faq-a" data-he="כן! כל התכנים באפליקציה בחינם לחלוטין — מבחנים מלאים, תרגול לפי נושאים, שאלות נפוצות ועוד. מצב PRO מסיר את הפרסומות בלבד. ₪9.90 לחודש או ₪49.90 לשנה." data-ar="نعم! جميع المحتويات مجانية تماماً — اختبارات كاملة، تدريب حسب الموضوع والمزيد. وضع PRO يزيل الإعلانات فقط. ₪9.90 شهرياً أو ₪49.90 سنوياً.">כן! כל התכנים באפליקציה בחינם לחלוטין — מבחנים מלאים, תרגול לפי נושאים, שאלות נפוצות ועוד. מצב PRO מסיר את הפרסומות בלבד. ₪9.90 לחודש או ₪49.90 לשנה.</div>
+      <h3 class="faq-q-heading">
+        <button type="button" class="faq-q" aria-expanded="false" aria-controls="faq-a-1" id="faq-q-1">
+          <span data-he="האפליקציה בחינם?" data-ar="هل التطبيق مجاني؟">האפליקציה בחינם?</span>
+          <span class="faq-arrow" aria-hidden="true">▼</span>
+        </button>
+      </h3>
+      <div class="faq-a" id="faq-a-1" role="region" aria-labelledby="faq-q-1" aria-hidden="true" data-he="כן! כל התכנים באפליקציה בחינם לחלוטין — מבחנים מלאים, תרגול לפי נושאים, שאלות נפוצות ועוד. מצב PRO מסיר את הפרסומות בלבד. ₪9.90 לחודש או ₪49.90 לשנה." data-ar="نعم! جميع المحتويات مجانية تماماً — اختبارات كاملة، تدريب حسب الموضوع والمزيد. وضع PRO يزيل الإعلانات فقط. ₪9.90 شهرياً أو ₪49.90 سنوياً.">כן! כל התכנים באפליקציה בחינם לחלוטין — מבחנים מלאים, תרגול לפי נושאים, שאלות נפוצות ועוד. מצב PRO מסיר את הפרסומות בלבד. ₪9.90 לחודש או ₪49.90 לשנה.</div>
     </div>
     <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        <span data-he="האפליקציה עובדת בלי אינטרנט?" data-ar="هل يعمل التطبيق بدون إنترنت؟">האפליקציה עובדת בלי אינטרנט?</span>
-        <span class="faq-arrow">▼</span>
-      </button>
-      <div class="faq-a" data-he="כן! לאחר הורדה ראשונה, כל השאלות זמינות גם ללא חיבור לאינטרנט. אפשר לתרגל בכל מקום ובכל זמן." data-ar="نعم! بعد التنزيل الأول، جميع الأسئلة متاحة بدون إنترنت. يمكنك التدرب في أي مكان وأي وقت.">כן! לאחר הורדה ראשונה, כל השאלות זמינות גם ללא חיבור לאינטרנט. אפשר לתרגל בכל מקום ובכל זמן.</div>
+      <h3 class="faq-q-heading">
+        <button type="button" class="faq-q" aria-expanded="false" aria-controls="faq-a-2" id="faq-q-2">
+          <span data-he="האפליקציה עובדת בלי אינטרנט?" data-ar="هل يعمل التطبيق بدون إنترنت؟">האפליקציה עובדת בלי אינטרנט?</span>
+          <span class="faq-arrow" aria-hidden="true">▼</span>
+        </button>
+      </h3>
+      <div class="faq-a" id="faq-a-2" role="region" aria-labelledby="faq-q-2" aria-hidden="true" data-he="כן! לאחר הורדה ראשונה, כל השאלות זמינות גם ללא חיבור לאינטרנט. אפשר לתרגל בכל מקום ובכל זמן." data-ar="نعم! بعد التنزيل الأول، جميع الأسئلة متاحة بدون إنترنت. يمكنك التدرب في أي مكان وأي وقت.">כן! לאחר הורדה ראשונה, כל השאלות זמינות גם ללא חיבור לאינטרנט. אפשר לתרגל בכל מקום ובכל זמן.</div>
     </div>
     <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        <span data-he="כמה שאלות יש באפליקציה?" data-ar="كم عدد الأسئلة في التطبيق؟">כמה שאלות יש באפליקציה?</span>
-        <span class="faq-arrow">▼</span>
-      </button>
-      <div class="faq-a" data-he="1,802 שאלות רשמיות ממשרד התחבורה, כולל 642 שאלות נפוצות שחוזרות הכי הרבה במבחן. מתאים לרישיונות B, A, C, C1 ו-D." data-ar="1,802 سؤالاً رسمياً من وزارة المواصلات، منها 642 سؤالاً شائعاً يتكرر في الامتحان. مناسب لرخص B، A، C، C1 وD.">1,802 שאלות רשמיות ממשרד התחבורה, כולל 642 שאלות נפוצות שחוזרות הכי הרבה במבחן. מתאים לרישיונות B, A, C, C1 ו-D.</div>
+      <h3 class="faq-q-heading">
+        <button type="button" class="faq-q" aria-expanded="false" aria-controls="faq-a-3" id="faq-q-3">
+          <span data-he="כמה שאלות יש באפליקציה?" data-ar="كم عدد الأسئلة في التطبيق؟">כמה שאלות יש באפליקציה?</span>
+          <span class="faq-arrow" aria-hidden="true">▼</span>
+        </button>
+      </h3>
+      <div class="faq-a" id="faq-a-3" role="region" aria-labelledby="faq-q-3" aria-hidden="true" data-he="1,802 שאלות רשמיות ממשרד התחבורה, כולל 642 שאלות נפוצות שחוזרות הכי הרבה במבחן. מתאים לרישיונות B, A, C, C1 ו-D." data-ar="1,802 سؤالاً رسمياً من وزارة المواصلات، منها 642 سؤالاً شائعاً يتكرر في الامتحان. مناسب لرخص B، A، C، C1 وD.">1,802 שאלות רשמיות ממשרד התחבורה, כולל 642 שאלות נפוצות שחוזרות הכי הרבה במבחן. מתאים לרישיונות B, A, C, C1 ו-D.</div>
     </div>
     <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        <span data-he="האפליקציה בעברית וגם בערבית?" data-ar="هل التطبيق بالعربية والعبرية؟">האפליקציה בעברית וגם בערבית?</span>
-        <span class="faq-arrow">▼</span>
-      </button>
-      <div class="faq-a" data-he="כן! ממשק, שאלות והסברים — הכל זמין בעברית ובערבית. אפשר להחליף שפה בכל רגע מההגדרות." data-ar="نعم! الواجهة والأسئلة والشروح — كل شيء متاح بالعربية والعبرية. يمكنك تغيير اللغة في أي وقت من الإعدادات.">כן! ממשק, שאלות והסברים — הכל זמין בעברית ובערבית. אפשר להחליף שפה בכל רגע מההגדרות.</div>
+      <h3 class="faq-q-heading">
+        <button type="button" class="faq-q" aria-expanded="false" aria-controls="faq-a-4" id="faq-q-4">
+          <span data-he="האפליקציה בעברית וגם בערבית?" data-ar="هل التطبيق بالعربية والعبرية؟">האפליקציה בעברית וגם בערבית?</span>
+          <span class="faq-arrow" aria-hidden="true">▼</span>
+        </button>
+      </h3>
+      <div class="faq-a" id="faq-a-4" role="region" aria-labelledby="faq-q-4" aria-hidden="true" data-he="כן! ממשק, שאלות והסברים — הכל זמין בעברית ובערבית. אפשר להחליף שפה בכל רגע מההגדרות." data-ar="نعم! الواجهة والأسئلة والشروح — كل شيء متاح بالعربية والعبرية. يمكنك تغيير اللغة في أي وقت من الإعدادات.">כן! ממשק, שאלות והסברים — הכל זמין בעברית ובערבית. אפשר להחליף שפה בכל רגע מההגדרות.</div>
     </div>
     <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        <span data-he="האפליקציה עובדת על iPhone וגם Android?" data-ar="هل يعمل التطبيق على iPhone وAndroid؟">האפליקציה עובדת על iPhone וגם Android?</span>
-        <span class="faq-arrow">▼</span>
-      </button>
-      <div class="faq-a" data-he="כן! DibDrive זמינה הן ב-App Store לאייפון והן ב-Google Play לאנדרואיד — חוויה זהה בשתי הפלטפורמות." data-ar="نعم! DibDrive متاح في App Store لأجهزة iPhone وGoogle Play لأجهزة Android — تجربة متطابقة على كلا النظامين.">כן! DibDrive זמינה הן ב-App Store לאייפון והן ב-Google Play לאנדרואיד — חוויה זהה בשתי הפלטפורמות.</div>
+      <h3 class="faq-q-heading">
+        <button type="button" class="faq-q" aria-expanded="false" aria-controls="faq-a-5" id="faq-q-5">
+          <span data-he="האפליקציה עובדת על iPhone וגם Android?" data-ar="هل يعمل التطبيق على iPhone وAndroid؟">האפליקציה עובדת על iPhone וגם Android?</span>
+          <span class="faq-arrow" aria-hidden="true">▼</span>
+        </button>
+      </h3>
+      <div class="faq-a" id="faq-a-5" role="region" aria-labelledby="faq-q-5" aria-hidden="true" data-he="כן! DibDrive זמינה הן ב-App Store לאייפון והן ב-Google Play לאנדרואיד — חוויה זהה בשתי הפלטפורמות." data-ar="نعم! DibDrive متاح في App Store لأجهزة iPhone وGoogle Play لأجهزة Android — تجربة متطابقة على كلا النظامين.">כן! DibDrive זמינה הן ב-App Store לאייפון והן ב-Google Play לאנדרואיד — חוויה זהה בשתי הפלטפורמות.</div>
     </div>
   </div>
 </div>
- 
+
 <!-- FINAL CTA -->
-<section class="final-cta reveal">
+<section class="final-cta reveal" aria-label="הורדת האפליקציה">
   <h2 data-he="מוכן להתחיל לתרגל?" data-ar="هل أنت مستعد للبدء؟">מוכן להתחיל לתרגל?</h2>
   <p data-he="הורד בחינם עכשיו ותתחיל להתכונן למבחן" data-ar="حمّل مجاناً الآن وابدأ التحضير للامتحان">הורד בחינם עכשיו ותתחיל להתכונן למבחן</p>
   <div class="cta-group cta-center">
     <a href="https://apps.apple.com/app/dibdrive/id6777384785" class="btn btn-apple" target="_blank" rel="noopener" onclick="trackDownload('AppStore','final_cta')">
-      <span class="btn-icon">🍏</span>
+      <span class="btn-icon" aria-hidden="true">🍏</span>
       <span class="btn-text-wrap"><span class="btn-label" data-he="הורד מה-" data-ar="حمّل من">הורד מה-</span><span class="btn-store">App Store</span></span>
+      <span class="visually-hidden">(נפתח בכרטיסייה חדשה)</span>
     </a>
     <a href="https://play.google.com/store/apps/details?id=com.dibdrive.app" class="btn btn-google" target="_blank" rel="noopener" onclick="trackDownload('GooglePlay','final_cta')">
-      <span class="btn-icon">🤖</span>
+      <span class="btn-icon" aria-hidden="true">🤖</span>
       <span class="btn-text-wrap"><span class="btn-label" data-he="הורד מ-" data-ar="حمّل من">הורד מ-</span><span class="btn-store">Google Play</span></span>
+      <span class="visually-hidden">(נפתח בכרטיסייה חדשה)</span>
     </a>
   </div>
 </section>
- 
+
+</main>
+
 <footer>
   <p data-he="© 2025 DibDrive · דיב מנסור לימוד נהיגה · 052-3132307 · כל הזכויות שמורות" data-ar="© 2025 DibDrive · ديب منصور لتعليم القيادة · 3132307-052 · جميع الحقوق محفوظة">© 2025 DibDrive · דיב מנסור לימוד נהיגה · 052-3132307 · כל הזכויות שמורות</p>
+  <div class="footer-links">
+    <a href="accessibility-statement.html" data-he="הצהרת נגישות" data-ar="بيان إمكانية الوصول">הצהרת נגישות</a>
+  </div>
 </footer>
- 
+
 <!-- WHATSAPP FLOAT -->
-<a href="https://wa.me/9720523132307" class="wa-btn" target="_blank" rel="noopener" aria-label="שלח הודעה בוואטסאפ">
-  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<a href="https://wa.me/9720523132307" class="wa-btn" target="_blank" rel="noopener" aria-label="שלח הודעה בוואטסאפ (נפתח בכרטיסייה חדשה)">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
   </svg>
 </a>
- 
+
 <!-- STICKY MOBILE CTA -->
 <div class="sticky-cta">
   <a href="https://apps.apple.com/app/dibdrive/id6777384785" class="btn btn-apple" target="_blank" rel="noopener" onclick="trackDownload('AppStore','sticky')">
-    <span class="btn-icon">🍏</span>
-    <span class="btn-text-wrap"><span class="btn-label">הורד מה-</span><span class="btn-store">App Store</span></span>
+    <span class="btn-icon" aria-hidden="true">🍏</span>
+    <span class="btn-text-wrap"><span class="btn-label" data-he="הורד מה-" data-ar="حمّل من">הורד מה-</span><span class="btn-store">App Store</span></span>
   </a>
   <a href="https://play.google.com/store/apps/details?id=com.dibdrive.app" class="btn btn-google" target="_blank" rel="noopener" onclick="trackDownload('GooglePlay','sticky')">
-    <span class="btn-icon">🤖</span>
-    <span class="btn-text-wrap"><span class="btn-label">הורד מ-</span><span class="btn-store">Google Play</span></span>
+    <span class="btn-icon" aria-hidden="true">🤖</span>
+    <span class="btn-text-wrap"><span class="btn-label" data-he="הורד מ-" data-ar="حمّل من">הורד מ-</span><span class="btn-store">Google Play</span></span>
   </a>
 </div>
- 
+
 <!-- BACK TO TOP -->
-<a href="#" class="back-top" id="backTop" aria-label="חזור למעלה">↑</a>
- 
+<button type="button" class="back-top" id="backTop" aria-label="חזור לראש הדף">↑</button>
+
 <script>
+var currentLang = 'he';
+
 // Language switcher
 function setLang(lang) {
+  currentLang = lang;
   document.documentElement.lang = lang === 'ar' ? 'ar' : 'he';
   document.documentElement.dir = 'rtl';
-  document.querySelectorAll('[data-he]').forEach(el => {
+  document.querySelectorAll('[data-he]').forEach(function(el){
     el.textContent = el.dataset[lang] || el.dataset.he;
   });
-  document.querySelectorAll('.lang-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.textContent.trim() === (lang === 'ar' ? 'عربي' : 'עברית'));
+  document.querySelectorAll('.lang-btn').forEach(function(btn){
+    var isActive = btn.dataset.lang === lang;
+    btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
   });
-  if(typeof gtag !== 'undefined') gtag('event', 'lang_switch', {language: lang});
+  if (typeof gtag !== 'undefined') gtag('event', 'lang_switch', {language: lang});
 }
- 
+document.querySelectorAll('.lang-btn').forEach(function(btn){
+  btn.addEventListener('click', function(){ setLang(btn.dataset.lang); });
+});
+
 // Track download clicks
 function trackDownload(store, location) {
-  if(typeof gtag !== 'undefined') {
+  if (typeof gtag !== 'undefined') {
     gtag('event', 'download_click', {
       'event_category': 'engagement',
       'event_label': store,
@@ -512,66 +595,129 @@ function trackDownload(store, location) {
     });
   }
 }
-const slides = document.querySelectorAll('.c-slide');
-const dots   = document.querySelectorAll('.dot');
-let cur = 0;
+
+// Carousel
+var slides = document.querySelectorAll('.c-slide');
+var dots = document.querySelectorAll('.dot');
+var cur = 0;
+var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var autoplayTimer = null;
+var autoplayPaused = reduceMotion;
+
 function goTo(n){
   slides[cur].classList.remove('active');
+  dots[cur].setAttribute('aria-current', 'false');
+  dots[cur].setAttribute('aria-selected', 'false');
   dots[cur].classList.remove('active');
   cur = (n + slides.length) % slides.length;
   slides[cur].classList.add('active');
   dots[cur].classList.add('active');
+  dots[cur].setAttribute('aria-current', 'true');
+  dots[cur].setAttribute('aria-selected', 'true');
 }
-dots.forEach(d => d.addEventListener('click', () => goTo(parseInt(d.dataset.i))));
-setInterval(() => goTo(cur + 1), 3000);
- 
+dots.forEach(function(d){
+  d.addEventListener('click', function(){
+    goTo(parseInt(d.dataset.i));
+  });
+});
+
+function startAutoplay(){
+  if (autoplayTimer) clearInterval(autoplayTimer);
+  autoplayTimer = setInterval(function(){ goTo(cur + 1); }, 4000);
+}
+function stopAutoplay(){
+  if (autoplayTimer) clearInterval(autoplayTimer);
+  autoplayTimer = null;
+}
+if (!autoplayPaused) startAutoplay();
+
+var carouselToggle = document.getElementById('carouselToggle');
+var carouselToggleIcon = document.getElementById('carouselToggleIcon');
+var carouselToggleLabel = document.getElementById('carouselToggleLabel');
+function updateToggleUI(){
+  carouselToggle.setAttribute('aria-pressed', autoplayPaused ? 'true' : 'false');
+  carouselToggleIcon.textContent = autoplayPaused ? '▶' : '⏸';
+  carouselToggleLabel.textContent = autoplayPaused ? 'הפעל החלפה אוטומטית' : 'עצור החלפה אוטומטית';
+}
+updateToggleUI();
+carouselToggle.addEventListener('click', function(){
+  autoplayPaused = !autoplayPaused;
+  if (autoplayPaused) stopAutoplay(); else startAutoplay();
+  updateToggleUI();
+});
+var carouselOuter = document.querySelector('.carousel-outer');
+carouselOuter.addEventListener('mouseenter', stopAutoplay);
+carouselOuter.addEventListener('focusin', stopAutoplay);
+carouselOuter.addEventListener('mouseleave', function(){ if(!autoplayPaused) startAutoplay(); });
+carouselOuter.addEventListener('focusout', function(){ if(!autoplayPaused) startAutoplay(); });
+
 // Scroll reveal
-const obs = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), {threshold:.1});
-document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
- 
-// Animated counters
-function animateCounter(el, target, duration=1800){
-  let start = null;
-  const step = ts => {
-    if(!start) start = ts;
-    const progress = Math.min((ts - start) / duration, 1);
-    const eased = 1 - Math.pow(1 - progress, 3);
-    const val = Math.floor(eased * target);
+var obs = new IntersectionObserver(function(es){
+  es.forEach(function(e){ if (e.isIntersecting) e.target.classList.add('visible'); });
+}, {threshold: .1});
+document.querySelectorAll('.reveal').forEach(function(el){ obs.observe(el); });
+
+// Animated counters (skip animation for reduced-motion users)
+function animateCounter(el, target, duration){
+  duration = duration || 1800;
+  if (reduceMotion) {
+    el.textContent = target.toLocaleString('he-IL');
+    return;
+  }
+  var start = null;
+  function step(ts){
+    if (!start) start = ts;
+    var progress = Math.min((ts - start) / duration, 1);
+    var eased = 1 - Math.pow(1 - progress, 3);
+    var val = Math.floor(eased * target);
     el.textContent = val.toLocaleString('he-IL');
-    if(progress < 1) requestAnimationFrame(step);
+    if (progress < 1) requestAnimationFrame(step);
     else el.textContent = target.toLocaleString('he-IL');
-  };
+  }
   requestAnimationFrame(step);
 }
-const counterObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if(e.isIntersecting){
+var counterObs = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if (e.isIntersecting) {
       animateCounter(e.target, parseInt(e.target.dataset.target));
       counterObs.unobserve(e.target);
     }
   });
-}, {threshold:.5});
-document.querySelectorAll('.stat-num[data-target]').forEach(el => counterObs.observe(el));
- 
-// FAQ
-function toggleFaq(btn){
-  const item = btn.closest('.faq-item');
-  const isOpen = item.classList.contains('open');
-  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
-  if(!isOpen) item.classList.add('open');
-}
- 
+}, {threshold: .5});
+document.querySelectorAll('.stat-num[data-target]').forEach(function(el){ counterObs.observe(el); });
+
+// FAQ (accessible disclosure pattern)
+document.querySelectorAll('.faq-q').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var item = btn.closest('.faq-item');
+    var panel = document.getElementById(btn.getAttribute('aria-controls'));
+    var isOpen = item.classList.contains('open');
+
+    document.querySelectorAll('.faq-item.open').forEach(function(openItem){
+      openItem.classList.remove('open');
+      var openBtn = openItem.querySelector('.faq-q');
+      var openPanel = document.getElementById(openBtn.getAttribute('aria-controls'));
+      openBtn.setAttribute('aria-expanded', 'false');
+      openPanel.setAttribute('aria-hidden', 'true');
+    });
+
+    if (!isOpen) {
+      item.classList.add('open');
+      btn.setAttribute('aria-expanded', 'true');
+      panel.setAttribute('aria-hidden', 'false');
+    }
+  });
+});
+
 // Back to top
-const backTop = document.getElementById('backTop');
-window.addEventListener('scroll', () => {
+var backTop = document.getElementById('backTop');
+window.addEventListener('scroll', function(){
   backTop.classList.toggle('visible', window.scrollY > 400);
 });
-backTop.addEventListener('click', e => {
-  e.preventDefault();
-  window.scrollTo({top:0, behavior:'smooth'});
+backTop.addEventListener('click', function(){
+  window.scrollTo({top: 0, behavior: reduceMotion ? 'auto' : 'smooth'});
+  document.querySelector('.skip-link').focus();
 });
 </script>
 </body>
 </html>
- 
-
